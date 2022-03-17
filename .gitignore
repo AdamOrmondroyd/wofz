@@ -3,5 +3,7 @@ packages/
 runs/
 submit*
 machine*
-slurm/
+slurm*
 .vscode/
+run*.py
+*.ipynb
