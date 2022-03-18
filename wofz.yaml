@@ -4,7 +4,7 @@ theory:
   # # linf = dark_linf.DarkEnergyLinf:
   # #   python_path: src/
   camb:
-    path: /home/ano23/CAMB
+    # path: /home/ano23/CAMB
     external_wa: True
     extra_args:
       halofit_version: mead
@@ -29,11 +29,11 @@ likelihood:
 params:
   # w: -0.5
   # a: 0.5
-  N: [0, 5]
-  w0: [-2, 2]
-  w1: [-2, 2]
-  w2: [-2, 2]
-  w3: [-2, 2]
+  N: [0, 1]
+  w0: [-1.5, -0.5]
+  w1: [-1.5, -0.5]
+  w2: [-1.5, -0.5]
+  w3: [-1.5, -0.5]
   a1: [0.334, 1]
   a2: [0.334, 1]
   logA:
@@ -169,7 +169,8 @@ params:
   #   prior: [0, 2]
   #   latex: z_2
 sampler:
-  polychord: {}
+  polychord:
+    nlive: 80
   # mcmc:
   #   drag: true
   #   oversample_power: 0.4
