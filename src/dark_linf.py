@@ -92,4 +92,6 @@ class DarkEnergyLinfTheory(Theory):
 
     def get_dark_energy(self):
         print("getting DarkEnergyLinf")
-        return self.current_state["dark_energy"]
+        result = self.current_state["dark_energy"]
+        print("result found")
+        return result
