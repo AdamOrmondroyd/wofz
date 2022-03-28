@@ -29,17 +29,17 @@ likelihood:
 params:
   # w: -0.5
   # a: 0.5
-  N: [0, 1]
+  N: [0, 5]
   w0: [-1.5, -0.5]
   w1: [-1.5, -0.5]
   w2: [-1.5, -0.5]
   w3: [-1.5, -0.5]
-  a1: [0.334, 1]
-  a2: [0.334, 1]
+  a1: [0, 1]
+  a2: [0, 1]
   logA:
     prior:
-      min: 1.61
-      max: 3.91
+      min: 2.5
+      max: 3.7
     ref:
       dist: norm
       loc: 3.05
@@ -52,8 +52,8 @@ params:
     latex: A_\mathrm{s}
   ns:
     prior:
-      min: 0.8
-      max: 1.2
+      min: 0.885
+      max: 1.04
     ref:
       dist: norm
       loc: 0.965
@@ -62,8 +62,8 @@ params:
     latex: n_\mathrm{s}
   theta_MC_100:
     prior:
-      min: 0.5
-      max: 10
+      min: 1.03
+      max: 1.05
     ref:
       dist: norm
       loc: 1.04109
@@ -81,8 +81,8 @@ params:
     max: 100
   ombh2:
     prior:
-      min: 0.005
-      max: 0.1
+      min: 0.019
+      max: 0.025
     ref:
       dist: norm
       loc: 0.0224
@@ -91,8 +91,8 @@ params:
     latex: \Omega_\mathrm{b} h^2
   omch2:
     prior:
-      min: 0.001
-      max: 0.99
+      min: 0.095
+      max: 0.145
     ref:
       dist: norm
       loc: 0.12
@@ -117,10 +117,10 @@ params:
   tau:
     prior:
       min: 0.01
-      max: 0.8
+      max: 0.4
     ref:
       dist: norm
-      loc: 0.055
+      loc: 0.03
       scale: 0.006
     proposal: 0.003
     latex: \tau_\mathrm{reio}
@@ -147,29 +147,9 @@ params:
     latex: '{\rm{Age}}/\mathrm{Gyr}'
   rdrag:
     latex: r_\mathrm{drag}
-  # N:
-  #   prior: [0, 5]
-  #   latex: N_\textrm{max}
-  # w0:
-  #   prior: [-2, 0]
-  #   latex: w_0
-  # w1:
-  #   prior: [-2, 0]
-  #   latex: w_1
-  # w2:
-  #   prior: [-2, 0]
-  #   latex: w_2
-  # w3:
-  #   prior: [-2, 0]
-  #   latex: w_3
-  # z1:
-  #   prior: [0, 2]
-  #   latex: z_1
-  # z2:
-  #   prior: [0, 2]
-  #   latex: z_2
 sampler:
   polychord:
+    path: /rds-d7/user/ano23/hpc-work/PolyChordLite_1.20.1
     nlive: 80
   # mcmc:
   #   drag: true
@@ -178,7 +158,3 @@ sampler:
   #   covmat: auto
   #   Rminus1_stop: 0.01
   #   Rminus1_cl_stop: 0.2
-  # evaluate: {}
-
-
-

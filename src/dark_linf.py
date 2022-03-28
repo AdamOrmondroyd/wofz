@@ -6,7 +6,7 @@ import numpy as np
 from cobaya import Theory
 from linf import AdaptiveLinf
 
-a_min = 1 / 3
+a_min = 0
 a_today = 1
 
 
