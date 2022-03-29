@@ -1,8 +1,6 @@
 theory:
   dark_linf.DarkEnergyLinfTheory:
     python_path: src/
-  # # linf = dark_linf.DarkEnergyLinf:
-  # #   python_path: src/
   camb:
     # path: /home/ano23/CAMB
     external_wa: True
@@ -15,20 +13,14 @@ theory:
       theta_H0_range:
       - 20
       - 100
-      # DarkEnergy: import_module("src.dark_linf").DarkEnergyLinf
-      # use_tabulated_w: True
-      # set_dark_energy_w_a:
-      #   a: [0.333, 1]
-      #   w: [-1, -1]
 likelihood:
   planck_2018_lowl.TT: null
   planck_2018_lowl.EE: null
   planck_2018_highl_plik.TTTEEE: null
+  planck_2018_highl_plik.SZ: 'lambda ksz_norm, A_sz: stats.norm.logpdf(ksz_norm+1.6*A_sz,
+    loc=9.5, scale=3.0)'
   planck_2018_lensing.clik: null
-
 params:
-  # w: -0.5
-  # a: 0.5
   N: [0, 5]
   w0: [-1.5, -0.5]
   w1: [-1.5, -0.5]
