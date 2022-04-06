@@ -1,59 +1,42 @@
 # from ctypes import c_double
 
 import numpy as np
-
-# from camb.dark_energy import DarkEnergyPPF
 from cobaya import Theory
-from linf import AdaptiveLinf
-
-a_min = 0
-a_today = 1
+from linf import AdaptiveLinf, Linf
 
 
-# class DarkEnergyLinf(DarkEnergyPPF):
+class DarkLinf(Theory):
+    """
+    Abstract base class for linf w(a).
 
-#     params = {
-#         "N": None,
-#         "w0": None,
-#         "a1": None,
-#         "w1": None,
-#         "a2": None,
-#         "w2": None,
-#         "w3": None,
-#     }
+    Requires additional class attribute params, which needs to be
+    ordered in the correct structure for a linf, and definition of
+    self.linf needs to be added to
+    """
 
-#     # what the heck are we actually meant to do here? I don't feel like this
-#     # can possibly be the way given how they went on about putting so much
-#     # effort into writing the python wrapper. Why does it lack clear instructions?
-#     # I think the only clear reason for this can be that I'm barking up the wrong tree.
-#     # someone must have tried a different model for dark energy at some point
+    num_as = 100
+    amin = 0
+    atoday = 1
 
-#     def __init__(self, *args, **kwargs):
-#         print("DarkEnergyLinf constructor")
-#         return super().__init__(*args, **kwargs)
+    def wofa(self, theta):
+        a = np.linspace(self.amin, self.atoday, self.num_as)
+        w = self.linf(a, theta)
 
-#     def set_params(self, N, w0, a1, w1, a2, w2, w3):
-#         print("setting DarkEnergyLinf params")
-#         self.N = N
-#         self.w0 = w0
-#         self.a1 = a1
-#         self.w1 = w1
-#         self.a2 = a2
-#         self.w2 = w2
-#         self.w3 = w3
+        return a, w
 
-#         self.linf = AdaptiveLinf(a_min, a_today)
-#         theta = np.array([N, w0, a1, w1, a2, w2, w3])
+    def calculate(self, state, want_derived=True, **params_values_dict):
+        theta = np.array([params_values_dict[p] for p in self.params.keys()])
+        a, w = self.wofa(theta)
+        state["dark_energy"] = {
+            "a": a,
+            "w": w,
+        }
 
-#         # use linspace to fill w(a) so that cubic spline approximates linf
-#         a = np.linspace(a_min, a_today)  # linspace
-#         w = self.linf(a, theta)
-
-#         self.use_tabulated_w = True
-#         self.set_w_a_table(a, w)
+    def get_dark_energy(self):
+        return self.current_state["dark_energy"]
 
 
-class DarkEnergyLinfTheory(Theory):
+class AdaptiveDarkLinf(DarkLinf):
 
     params = {
         "N": None,
@@ -62,38 +45,158 @@ class DarkEnergyLinfTheory(Theory):
         "w1": None,
         "a2": None,
         "w2": None,
-        "w3": None,
+        # "a3": None,
+        # "w3": None,
+        # "a4": None,
+        # "w4": None,
+        # "a5": None,
+        # "w5": None,
+        # "a6": None,
+        # "w6": None,
+        # "a7": None,
+        # "w7": None,
+        "w8": None,
     }
 
-    # what the heck are we actually meant to do here? I don't feel like this
-    # can possibly be the way given how they went on about putting so much
-    # effort into writing the python wrapper. Why does it lack clear instructions?
-    # I think the only clear reason for this can be that I'm barking up the wrong tree.
-    # someone must have tried a different model for dark energy at some point
-
     def __init__(self, *args, **kwargs):
-        print("DarkEnergyLinfTheory constructor")
-        return super().__init__(*args, **kwargs)
 
-    def calculate(self, state, want_derived=True, **params_values_dict):
-        print("calculating DarkEnergyLinf")
-        N, w0, a1, w1, a2, w2, w3 = [params_values_dict[p] for p in self.params.keys()]
+        self.linf = AdaptiveLinf(self.amin, self.atoday)
+        super().__init__(*args, **kwargs)
 
-        linf = AdaptiveLinf(a_min, a_today)
-        theta = np.array([N, w0, a1, w1, a2, w2, w3])
-        print(theta)
 
-        # use linspace to fill w(a) so that cubic spline becomes linf (might want to increase number of points)
-        # a = np.linspace(a_min, a_today)  # linspace
-        a = np.array([a_min, a1, a2, a_today])
-        w = linf(a, theta)
-        state["dark_energy"] = {
-            "a": a,
-            "w": w,
-        }  # working here (what elements does state have?)
+class VanillaDarkLinf(DarkLinf):
+    def __init__(self, *args, **kwargs):
 
-    def get_dark_energy(self):
-        print("getting DarkEnergyLinf")
-        result = self.current_state["dark_energy"]
-        print(f"result found:{result}")
-        return result
+        self.linf = Linf(self.amin, self.atoday)
+        super().__init__(*args, **kwargs)
+
+
+# TODO: see if I can just put the params in the constructor to be
+# defined with a for loop
+
+
+class Vanilla1(VanillaDarkLinf):
+
+    params = {
+        "w8": None,
+    }
+
+
+class Vanilla2(VanillaDarkLinf):
+
+    params = {
+        "w0": None,
+        "w8": None,
+    }
+
+
+class Vanilla3(VanillaDarkLinf):
+
+    params = {
+        "w0": None,
+        "a1": None,
+        "w1": None,
+        "w8": None,
+    }
+
+
+class Vanilla4(VanillaDarkLinf):
+
+    params = {
+        "w0": None,
+        "a1": None,
+        "w1": None,
+        "a2": None,
+        "w2": None,
+        "w8": None,
+    }
+
+
+class Vanilla5(VanillaDarkLinf):
+
+    params = {
+        "w0": None,
+        "a1": None,
+        "w1": None,
+        "a2": None,
+        "w2": None,
+        "a3": None,
+        "w3": None,
+        "w8": None,
+    }
+
+
+class Vanilla6(VanillaDarkLinf):
+
+    params = {
+        "w0": None,
+        "a1": None,
+        "w1": None,
+        "a2": None,
+        "w2": None,
+        "a3": None,
+        "w3": None,
+        "a4": None,
+        "w4": None,
+        "w8": None,
+    }
+
+
+class Vanilla7(VanillaDarkLinf):
+
+    params = {
+        "w0": None,
+        "a1": None,
+        "w1": None,
+        "a2": None,
+        "w2": None,
+        "a3": None,
+        "w3": None,
+        "a4": None,
+        "w4": None,
+        "a5": None,
+        "w5": None,
+        "w8": None,
+    }
+
+
+class Vanilla8(VanillaDarkLinf):
+
+    params = {
+        "w0": None,
+        "a1": None,
+        "w1": None,
+        "a2": None,
+        "w2": None,
+        "a3": None,
+        "w3": None,
+        "a4": None,
+        "w4": None,
+        "a5": None,
+        "w5": None,
+        "a6": None,
+        "w6": None,
+        "w8": None,
+    }
+
+
+class Vanilla9(VanillaDarkLinf):
+
+    params = {
+        "w0": None,
+        "a1": None,
+        "w1": None,
+        "a2": None,
+        "w2": None,
+        "a3": None,
+        "w3": None,
+        "a4": None,
+        "w4": None,
+        "a5": None,
+        "w5": None,
+        "a6": None,
+        "w6": None,
+        "a7": None,
+        "w7": None,
+        "w8": None,
+    }
