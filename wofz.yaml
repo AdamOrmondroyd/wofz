@@ -2,7 +2,6 @@ theory:
   dark_linf.AdaptiveDarkLinf:
     python_path: src/
   camb:
-    # path: /home/ano23/CAMB
     external_wa: True
     stop_at_error: True
     extra_args:
@@ -24,7 +23,7 @@ likelihood:
     loc=9.5, scale=3.0)'
   planck_2018_lensing.clik: null
 params:
-  N: [0, 1]
+  N: [0, 5]
   w0: [-1.0, -0.5]
   w1: [-1.0, -0.5]
   w2: [-1.0, -0.5]
