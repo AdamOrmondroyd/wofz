@@ -146,7 +146,6 @@ prior:
   sorted_prior: 'lambda a1, a2: np.log(a1 < a2)'
 sampler:
   polychord:
-    # path: /home/ano23/PolyChordLite_1.20.1
     nlive: 80
   # evaluate:
   #   override:
