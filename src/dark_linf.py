@@ -14,8 +14,8 @@ class DarkLinf(Theory):
     self.linf needs to be added to
     """
 
-    num_as = 100
-    amin = 0
+    num_as = 10000
+    amin = 1e-10
     atoday = 1
 
     def wofa(self, theta):
