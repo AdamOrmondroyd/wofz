@@ -1,9 +1,5 @@
 theory:
-  dark_linf.AdaptiveDarkLinf:
-    python_path: src/
   camb:
-    external_wa: True
-    # stop_at_error: True
     extra_args:
       halofit_version: mead
       bbn_predictor: PArthENoPE_880.2_standard.dat
@@ -22,13 +18,6 @@ likelihood:
     loc=9.5, scale=3.0)'
   planck_2018_lensing.clik: null
 params:
-  N: [0, 5]
-  w0: [-1.0, -0.5]
-  w1: [-1.0, -0.5]
-  w2: [-1.0, -0.5]
-  w8: [-1.0, -0.5]
-  a1: [0.1, 1]
-  a2: [0.1, 1]
   logA:
     prior:
       min: 2.5
@@ -140,24 +129,15 @@ params:
     latex: '{\rm{Age}}/\mathrm{Gyr}'
   rdrag:
     latex: r_\mathrm{drag}
-prior:
-  sorted_prior: 'lambda a1, a2: np.log(a1 < a2)'
+# prior:
+#   sorted_prior: 'lambda a1, a2: np.log(a1 < a2)'
 sampler:
   polychord:
     nlive: 80
-  # evaluate:
-  #   override:
-  #     N: 2.653452172702778
-  #     w0: -0.7659460421391511
-  #     w1: -0.9845816382839268
-  #     w2: -0.7101161287814777
-  #     w8: -0.6888677862957735
-  #     a1: 0.12942566777682263
-  #     a2: 0.7675696807222285
   # mcmc:
-  #   drag: true
-  #   oversample_power: 0.4
-  #   proposal_scale: 1.9
-  #   covmat: auto
-  #   Rminus1_stop: 0.01
-  #   Rminus1_cl_stop: 0.2
+    # drag: true
+    # oversample_power: 0.4
+    # proposal_scale: 1.9
+    # covmat: auto
+    # Rminus1_stop: 0.01
+    # Rminus1_cl_stop: 0.2
