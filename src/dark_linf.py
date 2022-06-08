@@ -19,7 +19,7 @@ class DarkLinf(Theory):
     atoday = 1
 
     def wofa(self, theta):
-        a = np.linspace(self.amin, self.atoday, self.num_as)
+        a = np.logspace(np.log10(self.amin), np.log10(self.atoday), self.num_as)
         w = self.linf(a, theta)
 
         return a, w
